@@ -168,13 +168,13 @@ fn foo(inside: Option<i32>) -> i32 {
 }
 let x: Option<i32> = 'block: {
     let may_panic = /* again, foo inlined to reach 'block */ {
-        let optional  = None.map(|num| num + 5);
+        let optional  = None.map(|num: i32| num + 5);
         // this is just `Option::unwrap`
         match optional {
             Some(t) => t,
             // call to `panic!()` replaced with our panic handler again.
             None => break 'block None,
-        };
+        }
     };
     Some(may_panic)
 };
